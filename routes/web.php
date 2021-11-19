@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Models\User;
-
+use  Illuminate\Support\Facades\Cache;
+use  Illuminate\Support\Facades\Redis;
 
 Route::get('/', function () {
+    Cache::rememberForever('key',fn() => '$value');
 	User::create([
 		'name' => 'Name' . Str::random(),
 		'email' => Str::random() . '@lol.com',
@@ -25,4 +27,5 @@ Route::get('/', function () {
 	]);
 	$data  = \App\Models\User::all();
 	return json_encode($data);
+
 });
